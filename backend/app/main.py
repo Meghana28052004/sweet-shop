@@ -1,0 +1,26 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from .database import Base, engine
+from .routers import auth, sweets, inventory
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="Sweet Shop Management System")
+
+# CORS for local dev (Vite on 5173)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(auth.router)
+app.include_router(sweets.router)
+app.include_router(inventory.router)
+
+
+@app.get("/")
+def root():
+    return {"status": "ok"}

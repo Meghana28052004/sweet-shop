@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  @apply bg-gradient-to-br from-candy-pink via-candy-yellow to-candy-mint min-h-screen;
+}
